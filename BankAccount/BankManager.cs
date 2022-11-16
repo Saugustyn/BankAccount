@@ -58,6 +58,7 @@ namespace BankAccount
                         break;
                     case 9:
                         Blik();
+                        Console.ReadKey();
                         break;
                     default:
                         Console.Write("Nieznane polecenie");
@@ -218,18 +219,32 @@ namespace BankAccount
 
             int[] blikNumber = new int[6];
             Random random = new Random();
+
             for (int i = 0; i < blikNumber.Length; i++)
             {
                 blikNumber[i] = random.Next(10);
             }
             Console.WriteLine(string.Join("", blikNumber));
-            for (int a = 10; a >= 0; a--)
+            for (int a = 5; a >= 0; a--)
             {
-                Console.Write("\rBlik Code will change in {0:00}sec", a);
-                Thread.Sleep(10000);
+                Console.Write("\rBlik Code expires in {0:00}sec", a);
+                Thread.Sleep(1000);
             }
+
             Console.Clear();
-            Blik();
+            Console.WriteLine("Wybierz akcję:");
+            Console.WriteLine("1 - Generate new BLIK code");
+            Console.WriteLine("2 - Main menu");
+
+            int action = SelectedAction();
+            if (action == 1)
+            {
+                Blik();
+            }
+            else
+            {
+                PrintMainMenu();
+            }
 
         }
     }
