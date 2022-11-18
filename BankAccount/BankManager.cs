@@ -11,11 +11,13 @@ namespace BankAccount
     {
         private AccountsManager _accountsManager;
         private IPrinter _printer;
+        private List<CustomerData> _customerData;
 
         public BankManager()
         {
             _accountsManager = new AccountsManager();
             _printer = new Printer();
+            _customerData = new List<CustomerData>();
         }
 
         public void Run()
@@ -68,6 +70,12 @@ namespace BankAccount
             while (action != 0);
         }
 
+
+        private void PrintLoginMenu()
+        {
+
+        }
+
         private void PrintMainMenu()
         {
             Console.Clear();
@@ -108,12 +116,87 @@ namespace BankAccount
             }
             Console.ReadKey();
         }
+        public void Login()
+        {
+            Start:
+            Console.Clear();
+            Console.WriteLine("1 - Login");
+            Console.WriteLine("2 - Registration");
+            var input = Console.ReadLine();
+            bool successfull = false;
+            while (!successfull)
+            {
+                if (input == "1")
+                { 
+                    Region:
+                    Console.Clear();
+                    Console.WriteLine("Write your username:");
+                    string username = Console.ReadLine();
+                    Console.WriteLine("Enter your password:");
+                    string password = Console.ReadLine();
+
+                    foreach (CustomerData customer in _customerData)
+                    {
+                        if (username == customer.Username && password == customer.Password)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You have successfully logged in !!!");
+                            Console.ReadLine();
+                            successfull = true;
+                            Run();
+                            break;
+                            
+                        }
+                    }
+
+                    if (!successfull)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Your username or password is incorect, try again !");
+                        Console.ReadKey();
+                        goto Region;
+                    }
+
+                }
+            
+                else if (input == "2")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Enter your firstname:");
+                    var firstname = Console.ReadLine();
+                    Console.WriteLine("Enter your lastname:");
+                    var lastname = Console.ReadLine();
+                    Console.WriteLine("Enter your pesel:");
+                    var pesel = Console.ReadLine();
+                    Console.WriteLine("Enter your username:");
+                    var username = Console.ReadLine();
+                    Console.WriteLine("Enter your password:");
+                    var password = Console.ReadLine();
+
+                    CustomerData customerData = new CustomerData(firstname, lastname, pesel, username, password);
+                    _customerData.Add(customerData);
+                    Console.Clear();
+                    Console.WriteLine("Welcome!");
+                    Console.ReadKey();
+                    goto Start;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Try again!");
+                    Console.ReadKey();
+                    goto Start;
+                }
+            }
+        }
 
         private CustomerData ReadCustomerData()
         {
             string firstName;
             string lastName;
             string pesel;
+            string username;
+            string password;
             Console.WriteLine("Podaj dane klienta:");
             Console.Write("Imię: ");
             firstName = Console.ReadLine();
@@ -121,8 +204,12 @@ namespace BankAccount
             lastName = Console.ReadLine();
             Console.Write("PESEL: ");
             pesel = Console.ReadLine();
+            Console.Write("Username: ");
+            username = Console.ReadLine();
+            Console.Write("Password: ");
+            password = Console.ReadLine();
 
-            return new CustomerData(firstName, lastName, pesel);
+            return new CustomerData(firstName, lastName, pesel, username, password);
         }
 
         private void AddBillingAccount()
@@ -229,6 +316,7 @@ namespace BankAccount
             {
                 Console.Write("\rBlik Code expires in {0:00}sec", a);
                 Thread.Sleep(1000);
+
             }
 
             Console.Clear();
@@ -253,12 +341,16 @@ namespace BankAccount
         public string FirstName { get; }
         public string LastName { get; }
         public long Pesel { get; }
+        public string Username { get; }
+        public string Password { get; }
 
-        public CustomerData(string firstName, string lastName, string pesel)
+        public CustomerData(string firstName, string lastName, string pesel, string username, string password)
         {
             FirstName = firstName;
             LastName = lastName;
             Pesel = long.Parse(pesel);
+            Username = username;
+            Password = password;
 
         }
     }
