@@ -21,7 +21,6 @@ namespace BankAccount
             Pesel = long.Parse(pesel);
             Username = username;
             Password = password;
-
         }
     }
 }

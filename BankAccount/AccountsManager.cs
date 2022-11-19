@@ -12,7 +12,8 @@ namespace BankAccount
 
         public AccountsManager()
         {
-            _accounts = new List<Account>();
+            _accounts = new List<Account>{ new SavingsAccount(1, "Jordan", "Belfort", 12121212121),
+                                           new SavingsAccount( 2 ,"Donnie", "Azoff", 13131313131)};
         }
 
         public IEnumerable<Account> GetAllAccounts()

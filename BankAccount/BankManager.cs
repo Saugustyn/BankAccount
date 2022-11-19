@@ -17,11 +17,12 @@ namespace BankAccount
         {
             _accountsManager = new AccountsManager();
             _printer = new Printer();
-            _customerData = new List<CustomerData> { new("Jordan", "Belfort", "12121212121", "admin", "admin123"),
+            _customerData = new List<CustomerData> {new("Jordan", "Belfort", "12121212121", "admin", "admin123"),
                                                      new("Donnie", "Azoff", "13131313131", "user", "user123")};
         }
         public void Run()
         {
+            CustomerData customer=  Login();
             int action;
             do
             {
@@ -31,7 +32,7 @@ namespace BankAccount
                 switch (action)
                 {
                     case 1:
-                        ListOfAccounts();
+                        ListOfAccountsFor(customer);
                         break;
                     case 2:
                         AddBillingAccount();
@@ -74,12 +75,6 @@ namespace BankAccount
             while (action != 0);
         }
 
-
-        private void PrintLoginMenu()
-        {
-
-        }
-
         private void PrintMainMenu()
         {
             Console.Clear();
@@ -108,12 +103,13 @@ namespace BankAccount
             return int.Parse(action);
         }
 
-        private void ListOfAccounts()
+        private void ListOfAccountsFor(CustomerData data)
         {
+
             Console.Clear();
-            CustomerData data = ReadCustomerData();
             Console.WriteLine();
             Console.WriteLine("Konta klienta {0} {1} {2}", data.FirstName, data.LastName, data.Pesel);
+            Console.WriteLine();
 
             foreach (Account account in _accountsManager.GetAllAccountsFor(data.FirstName, data.LastName, data.Pesel))
             {
@@ -121,7 +117,7 @@ namespace BankAccount
             }
             Console.ReadKey();
         }
-        public void Login()
+        public CustomerData Login()
         {
             Start:
             Console.Clear();
@@ -148,7 +144,7 @@ namespace BankAccount
                             Console.WriteLine("You have successfully logged in !!!");
                             Console.ReadLine();
                             successfull = true;
-                            Run();
+                            return customer;
                             break;
                         }
                     }
@@ -192,6 +188,7 @@ namespace BankAccount
                             Console.WriteLine("Welcome!");
                             Console.ReadKey();
                             goto Start;
+                            return new CustomerData(firstname, lastname, pesel, username, password);
                         }
                     }
                 }
@@ -203,6 +200,7 @@ namespace BankAccount
                     goto Start;
                 }
             }
+            throw new Exception("Error");
         }
 
         private CustomerData ReadCustomerData()
