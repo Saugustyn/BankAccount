@@ -17,9 +17,8 @@ namespace BankAccount
         {
             _accountsManager = new AccountsManager();
             _printer = new Printer();
-            _customerData = new List<CustomerData>();
-            CustomerData customer1 = new CustomerData("S", "s", "12", "S", "S");
-            _customerData.Add(customer1);
+            _customerData = new List<CustomerData> { new("Jordan", "Belfort", "12121212121", "admin", "admin123"),
+                                                     new("Donnie", "Azoff", "13131313131", "user", "user123")};
         }
         public void Run()
         {
@@ -170,17 +169,31 @@ namespace BankAccount
                     var lastname = Console.ReadLine();
                     Console.WriteLine("Enter your pesel:");
                     var pesel = Console.ReadLine();
+                    Regis:
                     Console.WriteLine("Enter your username:");
                     var username = Console.ReadLine();
                     Console.WriteLine("Enter your password:");
                     var password = Console.ReadLine();
 
-                    CustomerData customerData = new CustomerData(firstname, lastname, pesel, username, password);
-                    _customerData.Add(customerData);
-                    Console.Clear();
-                    Console.WriteLine("Welcome!");
-                    Console.ReadKey();
-                    goto Start;
+                    foreach(CustomerData customer in _customerData)
+                    {
+                        if(username == customer.Username)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Your username is already taken !");
+                            Console.WriteLine();
+                            goto Regis;
+                        }
+                        else
+                        {
+                            CustomerData customerData = new CustomerData(firstname, lastname, pesel, username, password);
+                            _customerData.Add(customerData);
+                            Console.Clear();
+                            Console.WriteLine("Welcome!");
+                            Console.ReadKey();
+                            goto Start;
+                        }
+                    }
                 }
                 else
                 {

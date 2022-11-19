@@ -10,7 +10,6 @@ internal class Program
     private static void Main(string[] args)
     {
         BankManager bankManager = new BankManager();
-        bankManager.Run();
-
+        bankManager.Login();
     }
 }
