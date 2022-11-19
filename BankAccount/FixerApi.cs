@@ -24,5 +24,16 @@ namespace BankAccount
             return json["result"];
         }
 
+        public void Latest(string currance)
+        {
+            var client = new RestClient($"{URI}latest?symbols=&base={currance}");
+            var request = new RestRequest();
+            request.AddHeader("apikey", _apiKey);
+            var response = client.Execute(request);
+
+            Console.WriteLine(response.Content);
+        }
+
+
     }
 }

@@ -26,70 +26,93 @@ namespace BankAccount
             int action;
             do
             {
-                PrintMainMenu();
-                action = SelectedAction();
-
-                switch (action)
+                if (customer.Username == "admin")
                 {
-                    case 1:
-                        ListOfAccountsFor(customer);
-                        break;
-                    case 2:
-                        AddBillingAccount();
-                        break;
-                    case 3:
-                        Console.Clear();
-                        AddSavingsAccount();
-                        Console.ReadKey();
-                        break;
-                    case 4:
-                        AddMoney();
-                        break;
-                    case 5:
-                        Console.Clear();
-                        TakeMoney();
-                        Console.ReadKey();
-                        break;
-                    case 6:
-                        ListOfCustomers();
-                        break;
-                    case 7:
-                        ListOfAllAccounts();
-                        break;
-                    case 8:
-                        CloseMonth();
-                        break;
-                    case 9:
-                        Blik();
-                        Console.ReadKey();
-                        break;
-                    case 10:
-                        Converter();
-                        Console.ReadKey();
-                        break;
-                    default:
-                        Console.Write("Nieznane polecenie");
-                        break;
+                    PrintAdminMainMenu();
+                    action = SelectedAction();
+                    switch (action)
+                    {
+                        case 1:
+                            ListOfCustomers();
+                            break;
+                        case 2:
+                            ListOfAllAccounts();
+                            break;
+                        case 3:
+                            CloseMonth();
+                            break;
+                        case 4:
+                            Converter();
+                            break;
+                        case 5:
+                            ExchangeRates();
+                            break;
+                        default:
+                            Console.Write("Nieznane polecenie");
+                            break;
+                    }
+                    
+                }
+                else
+                {
+                    PrintCustomerMainMenu();
+                    action = SelectedAction();
+                    switch (action)
+                    {
+                        case 1:
+                            ListOfAccountsFor(customer);
+                            break;
+                        case 2:
+                            AddBillingAccount(customer);
+                            break;
+                        case 3:
+                            AddSavingsAccount(customer);
+                            break;
+                        case 4:
+                            AddMoney();
+                            break;
+                        case 5:
+                            TakeMoney();
+                            break;
+                        case 6:
+                            Blik();
+                            break;
+                        case 7:
+                            Converter();
+                            break;
+                        default:
+                            Console.Write("Nieznane polecenie");
+                            break;
+                    }
                 }
             }
-            while (action != 0);
+               while (action != 0);
         }
 
-        private void PrintMainMenu()
+        private void PrintCustomerMainMenu()
         {
             Console.Clear();
             Console.WriteLine("Wybierz akcję:");
+            Console.WriteLine("0 - Zakończ");
             Console.WriteLine("1 - Lista kont klienta");
             Console.WriteLine("2 - Dodaj konto rozliczeniowe");
             Console.WriteLine("3 - Dodaj konto oszczędnościowe");
             Console.WriteLine("4 - Wpłać pieniądze na konto");
             Console.WriteLine("5 - Wypłać pieniądze z konta");
-            Console.WriteLine("6 - Lista klientów");
-            Console.WriteLine("7 - Wszystkie konta");
-            Console.WriteLine("8 - Zakończ miesiąc");
-            Console.WriteLine("9 - BLIK");
-            Console.WriteLine("10 - Exchange money");
+            Console.WriteLine("6 - BLIK");
+            Console.WriteLine("7 - Exchange money");
+        }
+
+        private void PrintAdminMainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Wybierz akcję:");
             Console.WriteLine("0 - Zakończ");
+            Console.WriteLine("1 - Lista klientów");
+            Console.WriteLine("2 - Wszystkie konta");
+            Console.WriteLine("3 - Zakończ miesiąc");
+            Console.WriteLine("4 - Exchange money");
+            Console.WriteLine("5 - Exchange rate data");
         }
 
         private int SelectedAction()
@@ -225,10 +248,9 @@ namespace BankAccount
             return new CustomerData(firstName, lastName, pesel, username, password);
         }
 
-        private void AddBillingAccount()
+        private void AddBillingAccount(CustomerData data)
         {
             Console.Clear();
-            CustomerData data = ReadCustomerData();
             Account billingAccount = _accountsManager.CreateBillingAccount(data.FirstName, data.LastName, data.Pesel);
 
             Console.WriteLine("Utworzono konto rozliczeniowe:");
@@ -236,10 +258,9 @@ namespace BankAccount
             Console.ReadKey();
         }
 
-        private void AddSavingsAccount()
+        private void AddSavingsAccount(CustomerData data)
         {
             Console.Clear();
-            CustomerData data = ReadCustomerData();
             Account savingsAccount = _accountsManager.CreateSavingsAccount(data.FirstName, data.LastName, data.Pesel);
 
             Console.WriteLine("Utworzono konto rozliczeniowe:");
@@ -264,6 +285,19 @@ namespace BankAccount
 
             Console.WriteLine(result);
             Console.ReadKey();
+        }
+
+        public void ExchangeRates()
+        {
+            string currance;
+            FixerApi fixer = new FixerApi();
+            Console.Clear();
+            Console.Write("Currance: ");
+            currance = Console.ReadLine();
+
+            fixer.Latest(currance);
+            Console.ReadKey();
+
         }
 
         private void CloseMonth()
@@ -300,7 +334,7 @@ namespace BankAccount
         {
             string accountNo;
             decimal value;
-
+            Console.Clear();
             Console.WriteLine("Wpłata pieniędzy");
             Console.Write("Numer konta: ");
             accountNo = Console.ReadLine();
@@ -318,7 +352,7 @@ namespace BankAccount
         {
             string accountNo;
             decimal value;
-
+            Console.Clear();
             Console.WriteLine("Wypłata pieniędzy");
             Console.Write("Numer konta: ");
             accountNo = Console.ReadLine();
@@ -363,8 +397,9 @@ namespace BankAccount
             }
             else
             {
-                PrintMainMenu();
+                PrintCustomerMainMenu();
             }
+            Console.ReadKey();
 
         }
     }
