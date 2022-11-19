@@ -18,8 +18,9 @@ namespace BankAccount
             _accountsManager = new AccountsManager();
             _printer = new Printer();
             _customerData = new List<CustomerData>();
+            CustomerData customer1 = new CustomerData("S", "s", "12", "S", "S");
+            _customerData.Add(customer1);
         }
-
         public void Run()
         {
             int action;
@@ -62,6 +63,10 @@ namespace BankAccount
                         Blik();
                         Console.ReadKey();
                         break;
+                    case 10:
+                        Converter();
+                        Console.ReadKey();
+                        break;
                     default:
                         Console.Write("Nieznane polecenie");
                         break;
@@ -89,6 +94,7 @@ namespace BankAccount
             Console.WriteLine("7 - Wszystkie konta");
             Console.WriteLine("8 - Zakończ miesiąc");
             Console.WriteLine("9 - BLIK");
+            Console.WriteLine("10 - Exchange money");
             Console.WriteLine("0 - Zakończ");
         }
 
@@ -122,11 +128,11 @@ namespace BankAccount
             Console.Clear();
             Console.WriteLine("1 - Login");
             Console.WriteLine("2 - Registration");
-            var input = Console.ReadLine();
+            var input = SelectedAction();
             bool successfull = false;
             while (!successfull)
             {
-                if (input == "1")
+                if (input == 1)
                 { 
                     Region:
                     Console.Clear();
@@ -145,10 +151,8 @@ namespace BankAccount
                             successfull = true;
                             Run();
                             break;
-                            
                         }
                     }
-
                     if (!successfull)
                     {
                         Console.Clear();
@@ -156,10 +160,8 @@ namespace BankAccount
                         Console.ReadKey();
                         goto Region;
                     }
-
                 }
-            
-                else if (input == "2")
+                else if (input == 2)
                 {
                     Console.Clear();
                     Console.WriteLine("Enter your firstname:");
@@ -231,6 +233,25 @@ namespace BankAccount
 
             Console.WriteLine("Utworzono konto rozliczeniowe:");
             _printer.Print(savingsAccount);
+            Console.ReadKey();
+        }
+
+        public void Converter()
+        {
+            string amount, from, to;
+            FixerApi fixer = new FixerApi();
+
+            Console.Clear();
+            Console.Write("Amount: ");
+            amount = Console.ReadLine();
+            Console.Write("From: ");
+            from = Console.ReadLine();
+            Console.Write("To: ");
+            to = Console.ReadLine();
+
+            var result = fixer.Convert(amount, from, to);
+
+            Console.WriteLine(result);
             Console.ReadKey();
         }
 
@@ -333,24 +354,6 @@ namespace BankAccount
             {
                 PrintMainMenu();
             }
-
-        }
-    }
-    internal class CustomerData
-    {
-        public string FirstName { get; }
-        public string LastName { get; }
-        public long Pesel { get; }
-        public string Username { get; }
-        public string Password { get; }
-
-        public CustomerData(string firstName, string lastName, string pesel, string username, string password)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Pesel = long.Parse(pesel);
-            Username = username;
-            Password = password;
 
         }
     }
