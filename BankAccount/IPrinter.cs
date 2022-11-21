@@ -9,5 +9,7 @@ namespace BankAccount
     internal interface IPrinter
     {
         void Print(Account account);
+        void PrintCustomerMainMenu();
+        void PrintAdminMainMenu();
     }
 }

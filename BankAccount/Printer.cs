@@ -19,5 +19,30 @@ namespace BankAccount
             Console.WriteLine();
         }
 
+        public void PrintCustomerMainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Wybierz akcję:");
+            Console.WriteLine("0 - Zakończ");
+            Console.WriteLine("1 - Lista kont klienta");
+            Console.WriteLine("2 - Dodaj konto rozliczeniowe");
+            Console.WriteLine("3 - Dodaj konto oszczędnościowe");
+            Console.WriteLine("4 - Wpłać pieniądze na konto");
+            Console.WriteLine("5 - Wypłać pieniądze z konta");
+            Console.WriteLine("6 - BLIK");
+            Console.WriteLine("7 - Exchange money");
+        }
+
+        public void PrintAdminMainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Wybierz akcję:");
+            Console.WriteLine("0 - Zakończ");
+            Console.WriteLine("1 - Lista klientów");
+            Console.WriteLine("2 - Wszystkie konta");
+            Console.WriteLine("3 - Zakończ miesiąc");
+            Console.WriteLine("4 - Exchange rate data");
+        }
+
     }
 }

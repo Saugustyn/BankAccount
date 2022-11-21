@@ -28,7 +28,7 @@ namespace BankAccount
             {
                 if (customer.Username == "admin")
                 {
-                    PrintAdminMainMenu();
+                    _printer.PrintAdminMainMenu();
                     action = SelectedAction();
                     switch (action)
                     {
@@ -42,9 +42,6 @@ namespace BankAccount
                             CloseMonth();
                             break;
                         case 4:
-                            Converter();
-                            break;
-                        case 5:
                             ExchangeRates();
                             break;
                         default:
@@ -55,7 +52,7 @@ namespace BankAccount
                 }
                 else
                 {
-                    PrintCustomerMainMenu();
+                    _printer.PrintCustomerMainMenu();
                     action = SelectedAction();
                     switch (action)
                     {
@@ -87,32 +84,6 @@ namespace BankAccount
                 }
             }
                while (action != 0);
-        }
-
-        private void PrintCustomerMainMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("Wybierz akcję:");
-            Console.WriteLine("0 - Zakończ");
-            Console.WriteLine("1 - Lista kont klienta");
-            Console.WriteLine("2 - Dodaj konto rozliczeniowe");
-            Console.WriteLine("3 - Dodaj konto oszczędnościowe");
-            Console.WriteLine("4 - Wpłać pieniądze na konto");
-            Console.WriteLine("5 - Wypłać pieniądze z konta");
-            Console.WriteLine("6 - BLIK");
-            Console.WriteLine("7 - Exchange money");
-        }
-
-        private void PrintAdminMainMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("Wybierz akcję:");
-            Console.WriteLine("0 - Zakończ");
-            Console.WriteLine("1 - Lista klientów");
-            Console.WriteLine("2 - Wszystkie konta");
-            Console.WriteLine("3 - Zakończ miesiąc");
-            Console.WriteLine("4 - Exchange money");
-            Console.WriteLine("5 - Exchange rate data");
         }
 
         private int SelectedAction()
@@ -397,7 +368,7 @@ namespace BankAccount
             }
             else
             {
-                PrintCustomerMainMenu();
+                _printer.PrintCustomerMainMenu();
             }
             Console.ReadKey();
 
