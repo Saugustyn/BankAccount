@@ -1,6 +1,6 @@
-<h1> BankAccount </h1>
+<h1 align="center"> BankAccount </h1>
 
->Bank account management console app
+<p align="center">Bank account management console app</p>
 <h2><br>Initial users:</br></h2>
 <b>Admin:</b>
 <br>login: admin</br>
