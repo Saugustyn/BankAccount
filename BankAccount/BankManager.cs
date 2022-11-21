@@ -80,10 +80,10 @@ namespace BankAccount
                                 AddSavingsAccount(customer);
                                 break;
                             case 4:
-                                AddMoney(customer);
+                                DepositMoney(customer);
                                 break;
                             case 5:
-                                TakeMoney(customer);
+                                WithdrawMoney(customer);
                                 break;
                             case 6:
                                 Blik();
@@ -263,7 +263,7 @@ namespace BankAccount
             Console.ReadKey();
         }
 
-        private void AddMoney(CustomerData data)
+        private void DepositMoney(CustomerData data)
         {
             string accountNo;
             decimal amount, value;
@@ -293,7 +293,7 @@ namespace BankAccount
 
         }
 
-        private void TakeMoney(CustomerData data)
+        private void WithdrawMoney(CustomerData data)
         {
             string accountNo;
             decimal amount, value;
