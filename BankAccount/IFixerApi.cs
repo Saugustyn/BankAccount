@@ -9,6 +9,6 @@ namespace BankAccount
 {
     internal interface IFixerApi
     {
-        public JsonNode Convert(string amount, string from, string to);
+        public decimal Convert(decimal amount, string from, string to);
     }
 }

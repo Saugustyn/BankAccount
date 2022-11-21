@@ -49,13 +49,23 @@ namespace BankAccount
         }
 
         public Account GetAccount(string accountNo) 
-        { 
-            return _accounts.Single(x => x.AccountNumber == accountNo); 
+        {
+            try
+            {
+                return _accounts.Single(x => x.AccountNumber == accountNo);
+            }
+            catch(Exception e)
+            {
+                Console.Clear();
+                Console.WriteLine("Account ID is incorect, try again");
+            }
+            return null;
+            
         }
 
         public IEnumerable<string> ListOfCustomers() 
         {
-            return _accounts.Select(a => string.Format("Imię: {0} | Nazwisko: {1} | PESEL: {2}", a.FirstName, a.LastName, a.Pesel)).Distinct(); 
+            return _accounts.Select(a => string.Format("Firstname: {0} | Lastname: {1} | PESEL: {2}", a.FirstName, a.LastName, a.Pesel)).Distinct(); 
         }
 
         public void CloseMonth() 
@@ -72,11 +82,13 @@ namespace BankAccount
 
         public void AddMoney(string accountNo, decimal value)
         {
-            Account account = GetAccount(accountNo); account.ChangeBalance(value);
+            Account account = GetAccount(accountNo);
+            account.ChangeBalance(value);
         }
         public void TakeMoney(string accountNo, decimal value)
         {
-            Account account = GetAccount(accountNo); account.ChangeBalance(-value);
+            Account account = GetAccount(accountNo);
+            account.ChangeBalance(-value);
         }
 
         private int generateId()
@@ -87,7 +99,6 @@ namespace BankAccount
             {
                 id = _accounts.Max(x => x.Id) + 1;
             }
-
             return id;
         }
     }

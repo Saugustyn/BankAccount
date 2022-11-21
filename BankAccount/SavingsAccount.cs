@@ -20,7 +20,7 @@ namespace BankAccount
 
         public override string TypeName()
         {
-            return "OSZCZĘDNOŚCIOWE";
+            return "SAVINGS";
         }
     }
 }

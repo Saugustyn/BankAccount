@@ -10,37 +10,37 @@ namespace BankAccount
     {
         public void Print(Account account)
         {
-            Console.WriteLine("Dane konta: {0}", account.AccountNumber);
-            Console.WriteLine("Typ: {0}",  account.GetType());
-            Console.WriteLine("Saldo: {0}zł", account.Balance);
-            Console.WriteLine("Imię właściciela: {0}", account.FirstName);
-            Console.WriteLine("Nazwisko właściciela: {0}", account.LastName);
-            Console.WriteLine("PESEL właściciela: {0}", account.Pesel);
+            Console.WriteLine("Account numbera: {0}", account.AccountNumber);
+            Console.WriteLine("Type: {0}",  account.GetType());
+            Console.WriteLine("Balance: {0}zł", account.Balance);
+            Console.WriteLine("Owner's fisrtname: {0}", account.FirstName);
+            Console.WriteLine("Owner's lastname: {0}", account.LastName);
+            Console.WriteLine("Owner's PESEL: {0}", account.Pesel);
             Console.WriteLine();
         }
 
         public void PrintCustomerMainMenu()
         {
             Console.Clear();
-            Console.WriteLine("Wybierz akcję:");
-            Console.WriteLine("0 - Zakończ");
-            Console.WriteLine("1 - Lista kont klienta");
-            Console.WriteLine("2 - Dodaj konto rozliczeniowe");
-            Console.WriteLine("3 - Dodaj konto oszczędnościowe");
-            Console.WriteLine("4 - Wpłać pieniądze na konto");
-            Console.WriteLine("5 - Wypłać pieniądze z konta");
+            Console.WriteLine("Choose action:");
+            Console.WriteLine("0 - End");
+            Console.WriteLine("1 - Your accounts");
+            Console.WriteLine("2 - Open Billing Account");
+            Console.WriteLine("3 - Open Savings Account");
+            Console.WriteLine("4 - Deposit money");
+            Console.WriteLine("5 - Withdraw money");
             Console.WriteLine("6 - BLIK");
-            Console.WriteLine("7 - Exchange money");
+            Console.WriteLine("7 - History");
         }
 
         public void PrintAdminMainMenu()
         {
             Console.Clear();
-            Console.WriteLine("Wybierz akcję:");
-            Console.WriteLine("0 - Zakończ");
-            Console.WriteLine("1 - Lista klientów");
-            Console.WriteLine("2 - Wszystkie konta");
-            Console.WriteLine("3 - Zakończ miesiąc");
+            Console.WriteLine("Choose action:");
+            Console.WriteLine("0 - End");
+            Console.WriteLine("1 - Customers list");
+            Console.WriteLine("2 - All accounts list");
+            Console.WriteLine("3 - Close month");
             Console.WriteLine("4 - Exchange rate data");
         }
 
