@@ -10,5 +10,6 @@ namespace BankAccount
     internal interface IFixerApi
     {
         public decimal Convert(decimal amount, string from, string to);
+        public void Latest(string currance);
     }
 }

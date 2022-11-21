@@ -11,5 +11,6 @@ namespace BankAccount
         void Print(Account account);
         void PrintCustomerMainMenu();
         void PrintAdminMainMenu();
+        void PrintHistory(Transaction transaction);
     }
 }

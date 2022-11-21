@@ -70,14 +70,18 @@ namespace BankAccount
 
         public void CloseMonth() 
         { 
-            foreach (SavingsAccount account in _accounts.Where(x => x is SavingsAccount)) 
-            { 
-                account.AddInterest(0.04M); 
-            } 
-            foreach (BillingAccount account in _accounts.Where(x => x is BillingAccount)) 
-            { 
-                account.TakeCharge(5.0M); 
-            } 
+            if(_accounts.Count > 0)
+            {
+                foreach (SavingsAccount account in _accounts.Where(x => x is SavingsAccount))
+                {
+                    account.AddInterest(0.04M);
+                }
+                foreach (BillingAccount account in _accounts.Where(x => x is BillingAccount))
+                {
+                    account.TakeCharge(5.0M);
+                }
+            }
+            else Console.WriteLine("No accounts");
         }
 
         public void AddMoney(string accountNo, decimal value)

@@ -33,18 +33,6 @@ namespace BankAccount
             return accountNumber;
         }
 
-        public string GetFullName()
-        {
-            string fullName = string.Format("{0} {1}", FirstName, LastName);
-
-            return fullName;
-        }
-
-        public string GetBalance()
-        {
-            return string.Format("{0}zł", Balance);
-        }
-
         public void ChangeBalance(decimal value)
         {
             Balance += value;

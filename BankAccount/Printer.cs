@@ -10,7 +10,7 @@ namespace BankAccount
     {
         public void Print(Account account)
         {
-            Console.WriteLine("Account numbera: {0}", account.AccountNumber);
+            Console.WriteLine("Account number: {0}", account.AccountNumber);
             Console.WriteLine("Type: {0}",  account.GetType());
             Console.WriteLine("Balance: {0}zł", account.Balance);
             Console.WriteLine("Owner's fisrtname: {0}", account.FirstName);
@@ -42,6 +42,11 @@ namespace BankAccount
             Console.WriteLine("2 - All accounts list");
             Console.WriteLine("3 - Close month");
             Console.WriteLine("4 - Exchange rate data");
+        }
+
+        public void PrintHistory(Transaction transaction)
+        {
+            Console.WriteLine($"---{transaction.AccountNumber}:{transaction.Value}{transaction.Currency} {transaction.Type} on {transaction.Date}");
         }
 
     }

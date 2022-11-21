@@ -11,5 +11,6 @@ internal class Program
     {
         BankManager bankManager = new BankManager();
         bankManager.Run();
+
     }
 }

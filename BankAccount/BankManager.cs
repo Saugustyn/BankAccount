@@ -38,6 +38,10 @@ namespace BankAccount
                         action = SelectedAction();
                         switch (action)
                         {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine("See you!");
+                                break;
                             case 1:
                                 ListOfCustomers();
                                 break;
@@ -51,7 +55,7 @@ namespace BankAccount
                                 ExchangeRates();
                                 break;
                             default:
-                                Console.Write("Unkown Command");
+                                Console.Write("Unknown Command");
                                 break;
                         }
 
@@ -62,6 +66,10 @@ namespace BankAccount
                         action = SelectedAction();
                         switch (action)
                         {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine("See you");
+                                break;
                             case 1:
                                 ListOfAccountsFor(customer);
                                 break;
@@ -81,10 +89,10 @@ namespace BankAccount
                                 Blik();
                                 break;
                             case 7:
-                                History(customer);
+                                CheckHistory(customer);
                                 break;
                             default:
-                                Console.Write("Unkown Command");
+                                Console.Write("Unknown Command");
                                 break;
                         }
                     }
@@ -111,31 +119,6 @@ namespace BankAccount
             return int.Parse(action);
         }
 
-        private void ListOfAccountsFor(CustomerData data)
-        {
-
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("Client accounts {0} {1} {2}", data.FirstName, data.LastName, data.Pesel);
-            Console.WriteLine();
-
-            foreach (Account account in _accountsManager.GetAllAccountsFor(data.FirstName, data.LastName, data.Pesel))
-            {
-                _printer.Print(account);
-            }
-            Console.ReadKey();
-        }
-
-        private void History(CustomerData data)
-        {
-            Console.Clear();
-            foreach(Transaction transaction in _history.Where(x => x.Pesel == data.Pesel))
-            {
-                PrintHistory(transaction);
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-        }
         public CustomerData Login()
         {
         Start:
@@ -222,6 +205,44 @@ namespace BankAccount
             throw new Exception("Error");
         }
 
+        private void ListOfAccountsFor(CustomerData data)
+        {
+
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("Client accounts {0} {1} {2}", data.FirstName, data.LastName, data.Pesel);
+            Console.WriteLine();
+
+            foreach (Account account in _accountsManager.GetAllAccountsFor(data.FirstName, data.LastName, data.Pesel))
+            {
+                _printer.Print(account);
+            }
+            Console.ReadKey();
+        }
+
+        private void ListOfAllAccounts()
+        {
+            Console.Clear();
+            Console.WriteLine("All accounts list:");
+            Console.WriteLine();
+            foreach (Account account in _accountsManager.GetAllAccounts())
+            {
+                _printer.Print(account);
+            }
+            Console.ReadKey();
+        }
+
+        private void ListOfCustomers()
+        {
+            Console.Clear();
+            Console.WriteLine("Customers list:");
+            foreach (string customer in _accountsManager.ListOfCustomers())
+            {
+                Console.WriteLine(customer);
+            }
+            Console.ReadKey();
+        }
+
         private void AddBillingAccount(CustomerData data)
         {
             Console.Clear();
@@ -239,48 +260,6 @@ namespace BankAccount
 
             Console.WriteLine("Savings account opened:");
             _printer.Print(savingsAccount);
-            Console.ReadKey();
-        }
-        public void ExchangeRates()
-        {
-            decimal currance;
-            FixerApi fixer = new FixerApi();
-            Console.Clear();
-            Console.Write("Currance: ");
-            currance = decimal.Parse( Console.ReadLine());
-
-            fixer.Latest(currance);
-            Console.ReadKey();
-
-        }
-
-        private void CloseMonth()
-        {
-            Console.Clear();
-            _accountsManager.CloseMonth();
-            Console.WriteLine("Month-end close done");
-            Console.ReadKey();
-        }
-
-        private void ListOfAllAccounts()
-        {
-            Console.Clear();
-            Console.WriteLine("All accounts list:");
-            foreach (Account account in _accountsManager.GetAllAccounts())
-            {
-                _printer.Print(account);
-            }
-            Console.ReadKey();
-        }
-
-        private void ListOfCustomers()
-        {
-            Console.Clear();
-            Console.WriteLine("Customers list:");
-            foreach (string customer in _accountsManager.ListOfCustomers())
-            {
-                Console.WriteLine(customer);
-            }
             Console.ReadKey();
         }
 
@@ -314,10 +293,6 @@ namespace BankAccount
 
         }
 
-        private void PrintHistory(Transaction transaction)
-        {
-            Console.WriteLine($"---{transaction.AccountNumber}:{transaction.Value}{transaction.Currency} {transaction.Type} on {transaction.Date}");
-        }
         private void TakeMoney(CustomerData data)
         {
             string accountNo;
@@ -366,7 +341,38 @@ namespace BankAccount
             Console.ReadKey();
         }
 
-        public void Blik()
+        private void CloseMonth()
+        {
+            Console.Clear();
+            _accountsManager.CloseMonth();
+            Console.WriteLine("Month-end close done");
+            Console.ReadKey();
+        }
+
+        private void CheckHistory(CustomerData data)
+        {
+            Console.Clear();
+            foreach (Transaction transaction in _history.Where(x => x.Pesel == data.Pesel))
+            {
+                _printer.PrintHistory(transaction);
+                Console.WriteLine();
+            }
+            Console.ReadKey();
+        }
+
+        private void ExchangeRates()
+        {
+            string currance;
+            FixerApi fixer = new FixerApi();
+            Console.Clear();
+            Console.Write("Currance: ");
+            currance = (Console.ReadLine());
+            Console.WriteLine($"1 {currance} = ");
+            fixer.Latest(currance);
+            Console.ReadKey();
+
+        }
+        private void Blik()
         {
             Console.Clear();
 

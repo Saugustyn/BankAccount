@@ -17,26 +17,27 @@ namespace BankAccount
         public decimal Convert(decimal amount, string from, string to)
         {
             decimal result;
+
             var client = new RestClient($"{URI}convert?to={to}&from={from}&amount={amount}");
             var request = new RestRequest();
             request.AddHeader("apikey", _apiKey);
             var response = client.Execute(request);
             var json = JsonObject.Parse(response.Content);
             string valueString = json["result"].ToString();
-
             result = decimal.Parse(valueString, CultureInfo.InvariantCulture);
             return result;
 
         }
 
-        public void Latest(decimal currance)
+        public void Latest(string currance)
         {
             var client = new RestClient($"{URI}latest?symbols=&base={currance}");
             var request = new RestRequest();
             request.AddHeader("apikey", _apiKey);
             var response = client.Execute(request);
-
-            Console.WriteLine(response.Content);
+            var json = JsonObject.Parse(response.Content);
+            var jsonResult = json["rates"];
+            Console.WriteLine(jsonResult);
         }
 
 
